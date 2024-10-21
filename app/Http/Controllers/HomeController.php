@@ -97,7 +97,7 @@ class HomeController extends Controller
                 'age' => $student->age,
                 'gender' => $student->gender,
                 'grade_level' => $student->grade_level
-            ]);
+            ], 201);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'message' => 'Validation error occured',
