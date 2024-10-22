@@ -1,5 +1,6 @@
 <div class="btn-container">
-    <button id="btn-add-students" class=" btn btn-sm btn-secondary text-sm" onclick="my_modal_2.showModal()"><span
+    <button id="btn-add-students" class=" btn btn-sm btn-secondary text-sm"
+        onclick="my_modal_2.showModal()"><x-admin-components.icons name="plus" class="text-white" /><span
             class="hidden md:block">Add
-            Students</span><x-admin-components.icons name="plus" class="text-white" /></button>
+            Students</span></button>
 </div>

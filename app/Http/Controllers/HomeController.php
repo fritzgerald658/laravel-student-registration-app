@@ -43,6 +43,13 @@ class HomeController extends Controller
                 'grade_level' => 'required|string|max:100',
             ]);
 
+            $data['first_name'] = ucwords(strtolower($data['first_name']));
+            $data['last_name'] = ucwords(strtolower($data['last_name']));
+            $data['address'] = ucwords(strtolower($data['address']));
+            $data['age'] = ucwords(strtolower($data['age']));
+            $data['gender'] = ucwords(strtolower($data['gender']));
+            $data['grade_level'] = ucwords(strtolower($data['grade_level']));
+
             $students = StudentsModel::create($data);
             return response()->json([
                 'id' => $students->id,

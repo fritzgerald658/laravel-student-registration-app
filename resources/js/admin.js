@@ -133,11 +133,10 @@ function fetchStudent() {
                 $("#fetch-last-name").val(response.last_name);
                 $("#fetch-age").val(response.age);
                 $("#fetch-address").val(response.address);
-                $(
-                    'input[name="fetch-gender"][value="' +
-                        response.gender +
-                        '"]'
-                ).prop("checked", true);
+                $('input[name="gender"][value="' + response.gender + '"]').prop(
+                    "checked",
+                    true
+                );
                 $("#fetch-grade-level").val(response.grade_level);
 
                 document
