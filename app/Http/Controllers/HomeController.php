@@ -124,4 +124,15 @@ class HomeController extends Controller
             ], 500);
         }
     }
+
+    public function filterStudents(Request $request)
+    {
+
+        if ($request->has('grade_level')) {
+            $students = StudentsModel::where('grade_level', $request->grade_level)->get();
+        } else {
+            $students = StudentsModel::all();
+        }
+        return response()->json($students);
+    }
 }

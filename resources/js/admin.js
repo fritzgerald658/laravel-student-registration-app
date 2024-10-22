@@ -7,14 +7,21 @@ function setUpCsrfToken() {
     });
 }
 
+function resetFormMessages() {
+    $("#btn-add-students").click(function () {
+        $(".message").addClass("hidden");
+    });
+}
+
 // this will handle ajax code for adding students
 function addStudents() {
     $("#add-students").on("submit", function (e) {
         e.preventDefault(); // Prevent form submission
+        console.log("Hey");
 
         $.ajax({
             type: "POST",
-            url: "{{ route('admin.store') }}", // Corrected route syntax
+            url: "admin-dashboard/store", // Corrected route syntax
             data: $(this).serialize(), // Serialize form data
             success: function (response) {
                 if (response.success === true) {
@@ -71,6 +78,13 @@ function addStudents() {
 }
 
 function deleteStudent() {
+    // Set up CSRF token for all AJAX requests
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+
     $("#student-info").on("click", ".delete", function (e) {
         e.preventDefault();
 
@@ -82,10 +96,7 @@ function deleteStudent() {
         ) {
             $.ajax({
                 type: "DELETE",
-                url: "admin-dashboard/" + studentId,
-                data: {
-                    _token: "{{ csrf_token() }}",
-                },
+                url: "admin-dashboard/" + studentId, // Use the Blade-defined variable for the base URL
                 success: function (response) {
                     if (response.success) {
                         $(e.target).closest("tr").remove();
@@ -93,6 +104,12 @@ function deleteStudent() {
                             "<p>Student data has been successfully deleted</p>"
                         );
                     }
+                },
+                error: function (xhr) {
+                    console.error("An error occurred:", xhr);
+                    $("#message").html(
+                        "<p>An error occurred while deleting the student.</p>"
+                    );
                 },
             });
         }
@@ -183,10 +200,52 @@ function updateStudents() {
     });
 }
 
-$(document).ready(function () {
-    setUpCsrfToken();
-    addStudents();
-    updateStudents();
-    deleteStudent();
-    fetchStudent();
-});
+function filterStudents() {
+    $(document).on("change", "#grade-level-filter", function () {
+        var gradeLevel = $(this).val();
+        console.log(gradeLevel);
+
+        $.ajax({
+            type: "GET",
+            url: "filter-students/grade_level",
+            data: { grade_level: gradeLevel },
+            success: function (response) {
+                $("#student-info").empty();
+                response.forEach(function (student) {
+                    $("#student-info").append(
+                        `<tr data-id="${student.id}">
+                            <td>${student.id}</td>
+                            <td>${student.first_name}</td>
+                            <td>${student.last_name}</td>
+                            <td>${student.address}</td>
+                            <td>${student.age}</td>
+                            <td>${student.gender}</td>
+                            <td>${student.grade_level}</td>
+                            <td>
+                                <a class="update btn btn-sm m-2" data-id="${student.id}" href="">Edit</a>
+                                <a class="delete btn btn-sm m-2" href="" data-id="${student.id}">Delete</a>
+                            </td>
+                        </tr>`
+                    );
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error: " + status + error);
+            },
+        });
+    });
+}
+
+function execute() {
+    $(document).ready(function () {
+        setUpCsrfToken();
+        resetFormMessages();
+        addStudents();
+        updateStudents();
+        deleteStudent();
+        fetchStudent();
+        filterStudents();
+    });
+}
+
+execute();

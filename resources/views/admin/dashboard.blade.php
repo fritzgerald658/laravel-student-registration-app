@@ -24,7 +24,10 @@
         <x-admin-components.navbar title="Admin Dashboard" />
     </header>
     <div class="mx-5 flex flex-col gap-5">
-        <x-admin-components.btn-add-students />
+        <div class="flex justify-between">
+            <x-admin-components.btn-add-students />
+            <x-admin-components.select-filter />
+        </div>
         <div class="table-container">
             <div class="overflow-x-auto">
                 <table class="table">
@@ -48,6 +51,7 @@
     <x-admin-components.update-student-modal />
     {{-- Ajax add students --}}
     @vite('resources/js/admin.js')
+
     {{-- <script>
         $(document).ready(function() {
             $.ajaxSetup({
