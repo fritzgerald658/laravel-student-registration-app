@@ -78,16 +78,20 @@ class HomeController extends Controller
     public function updateStudents(Request $request, $id)
     {
         try {
+
+            $data = $request->validate([
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'address' => 'required|string|max:255',
+                'age' => 'required|integer|max:100',
+                'gender' => 'required|string|max:100',
+                'grade_level' => 'required|string|max:100',
+            ]);
+
+
             $student = StudentsModel::findOrFail($id);
 
-            $student->update($request->only([
-                'first_name',
-                'last_name',
-                'address',
-                'age',
-                'gender',
-                'grade_level'
-            ]));
+            $student->update($data);
 
             return response()->json([
                 'id' => $student->id,
@@ -96,7 +100,8 @@ class HomeController extends Controller
                 'address' => $student->address,
                 'age' => $student->age,
                 'gender' => $student->gender,
-                'grade_level' => $student->grade_level
+                'grade_level' => $student->grade_level,
+                'success' => true
             ], 201);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
