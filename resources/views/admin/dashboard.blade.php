@@ -21,7 +21,7 @@
 
 <body>
     <header>
-        <x-admin-components.navbar />
+        <x-admin-components.navbar title="Admin Dashboard" />
     </header>
     <div class="mx-5 flex flex-col gap-5">
         <x-admin-components.btn-add-students />

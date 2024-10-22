@@ -8,9 +8,6 @@
             <td>{{ $student->age }}</td>
             <td>{{ $student->gender }}</td>
             <td>{{ $student->grade_level }}</td>
-            <td>
-                <x-admin-components.table-actions :student='$student' />
-            </td>
         </tr>
     @endforeach
 </tbody>

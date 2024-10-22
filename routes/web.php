@@ -22,14 +22,15 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 //  user admin routing
-Route::get('/admin-dashboard', [HomeController::class, 'adminLogin'])->name('admin.dashboard');
-Route::post('/admin-dashboard', [HomeController::class, 'storeStudents'])->name('admin.store');
+Route::get('/user-dashboard', [HomeController::class, 'userLogin'])->name('user.user-dashboard')->middleware(['auth', 'user', 'verified']);
+Route::get('/admin-dashboard', [HomeController::class, 'adminLogin'])->name('admin.dashboard')->middleware(['auth', 'admin']);
+Route::post('/admin-dashboard', [HomeController::class, 'storeStudents'])->name('admin.store')->middleware(['auth', 'admin']);;
 
 // delete students data
-Route::delete('/admin-dashboard/{students}', [HomeController::class, 'destroyStudents'])->name('admin.delete');
+Route::delete('/admin-dashboard/{students}', [HomeController::class, 'destroyStudents'])->name('admin.delete')->middleware(['auth', 'admin']);;
 
 // fetch students data
-Route::get('/admin-dashboard/{students}', [HomeController::class, 'fetchStudents'])->name('admin.fetch');
+Route::get('/admin-dashboard/{students}', [HomeController::class, 'fetchStudents'])->name('admin.fetch')->middleware(['auth', 'admin']);;
 
 // update students data
-Route::put('/admin-dashboard/{students}', [HomeController::class, 'updateStudents'])->name('admin.update');
+Route::put('/admin-dashboard/{students}', [HomeController::class, 'updateStudents'])->name('admin.update')->middleware(['auth', 'admin']);

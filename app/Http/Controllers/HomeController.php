@@ -14,6 +14,14 @@ class HomeController extends Controller
         return view('admin.dashboard', ['students' => $students]);
     }
 
+    public function userLogin()
+    {
+        session(['welcome message' => 'Hi']);
+
+        $students = StudentsModel::all();
+        return view('user.user-dashboard', ['students' => $students]);
+    }
+
     public function destroyStudents(StudentsModel $students)
     {
         $students->delete();
