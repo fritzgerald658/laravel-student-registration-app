@@ -1,5 +1,5 @@
 <select id="grade-level-filter"
-    class="mr-0 md:mr-10 select select-secondary select-sm px-2 md:px-8 p-0 max-w-xs text-sm pr-7">
+    class="mr-0 md:mr-10 select select-secondary select-sm px-2 md:px-8  p-0 max-w-xs text-sm pr-8 md:pr-7">
     <option disabled selected>Filter by Grade Level</option>
     <option value="Kindergarten">Kindergarten</option>
     <option value="Grade 1">Grade 1</option>
